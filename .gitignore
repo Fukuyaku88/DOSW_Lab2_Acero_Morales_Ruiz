@@ -1,0 +1,12 @@
+# Java compiles
+*.class
+
+#Output files (intelliJ)
+.idea/
+out/
+target/
+*.iml
+
+# System files
+.DS_Store
+Thumbs.db
