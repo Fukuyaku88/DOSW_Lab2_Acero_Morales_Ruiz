@@ -1,6 +1,5 @@
 package edu.eci.dosw.reto2;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -14,128 +13,219 @@ public class TheFiveStarChefC2 {
 
     public static void run() {
 
-        List<Ingredient> availableIngredients = createIngredients();
-
         System.out.println("=======================================");
         System.out.println("       FIVE-STAR CHEF BURGER");
         System.out.println("=======================================");
 
-        showIngredients(availableIngredients);
+        HamburgerBuilder builder =
+                new CustomizedHamburgerBuilder();
 
-        List<Ingredient> selectedIngredients = getUserSelection(availableIngredients);
+        // Step 1: Bread
+        selectRequiredIngredient(
+                builder,
+                IngredientType.BREAD,
+                "STEP 1 - SELECT YOUR BREAD"
+        );
 
-        if (selectedIngredients.isEmpty()) {
-            System.out.println("\nNo ingredients were selected.");
-            System.out.println("The hamburger could not be created.");
-            return;
-        }
+        // Step 2: Meat
+        selectRequiredIngredient(
+                builder,
+                IngredientType.MEAT,
+                "STEP 2 - SELECT YOUR MEAT"
+        );
 
-        HamburgerBuilder builder = new CustomizedHamburgerBuilder();
+        // Step 3: Cheese
+        selectOptionalIngredient(
+                builder,
+                IngredientType.CHEESE,
+                "STEP 3 - SELECT YOUR CHEESE"
+        );
 
-        for (Ingredient ingredient : selectedIngredients) {
-            builder.addIngredient(ingredient);
-        }
+        // Step 4: Vegetables
+        selectMultipleIngredients(
+                builder,
+                IngredientType.VEGETABLE,
+                "STEP 4 - SELECT YOUR VEGETABLES"
+        );
 
+        // Step 5: Sauces
+        selectMultipleIngredients(
+                builder,
+                IngredientType.SAUCE,
+                "STEP 5 - SELECT YOUR SAUCES"
+        );
+
+        // Step 6: Other ingredients
+        selectMultipleIngredients(
+                builder,
+                IngredientType.OTHER,
+                "STEP 6 - SELECT OTHER INGREDIENTS"
+        );
+
+        // Build final hamburger
         Hamburger hamburger = builder.build();
 
         displayHamburger(hamburger);
     }
 
-    private static List<Ingredient> createIngredients() {
+    private static void selectRequiredIngredient(
+            HamburgerBuilder builder,
+            IngredientType type,
+            String title) {
 
-        List<Ingredient> ingredients = new ArrayList<>();
+        List<Ingredient> options =
+                IngredientCatalog.getIngredientsByType(type);
 
-        ingredients.add(
-                new Ingredient("Brioche Bread", 2000, IngredientType.BREAD)
-        );
+        System.out.println("\n" + title);
+        System.out.println("---------------------------------------");
 
-        ingredients.add(
-                new Ingredient("Beef", 8000, IngredientType.MEAT)
-        );
+        for (int i = 0; i < options.size(); i++) {
 
-        ingredients.add(
-                new Ingredient("Chicken", 7000, IngredientType.MEAT)
-        );
-
-        ingredients.add(
-                new Ingredient("Cheese", 2500, IngredientType.CHEESE)
-        );
-
-        ingredients.add(
-                new Ingredient("Lettuce", 1000, IngredientType.VEGETABLE)
-        );
-
-        ingredients.add(
-                new Ingredient("Tomato", 1000, IngredientType.VEGETABLE)
-        );
-
-        ingredients.add(
-                new Ingredient("Onion", 800, IngredientType.VEGETABLE)
-        );
-
-        ingredients.add(
-                new Ingredient("BBQ Sauce", 1500, IngredientType.SAUCE)
-        );
-
-        ingredients.add(
-                new Ingredient("Ketchup", 1000, IngredientType.SAUCE)
-        );
-
-        ingredients.add(
-                new Ingredient("Bacon", 3000, IngredientType.OTHER)
-        );
-
-        return ingredients;
-    }
-
-    private static void showIngredients(List<Ingredient> ingredients) {
-
-        System.out.println("\nAvailable ingredients:");
-
-        for (int i = 0; i < ingredients.size(); i++) {
-            Ingredient ingredient = ingredients.get(i);
+            Ingredient ingredient = options.get(i);
 
             System.out.println(
                     (i + 1) + ". " +
-                    ingredient.getDescription() +
-                    " [" + ingredient.getType() + "]"
+                    ingredient.getDescription()
             );
         }
 
-        System.out.println("0. Finish selection");
+        while (true) {
+
+            System.out.print("\nSelect an option: ");
+
+            int option = scanner.nextInt();
+
+            if (option >= 1 && option <= options.size()) {
+
+                Ingredient selectedIngredient =
+                        options.get(option - 1);
+
+                builder.addIngredient(selectedIngredient);
+
+                System.out.println(
+                        "Added: " +
+                        selectedIngredient.getDescription()
+                );
+
+                break;
+            }
+
+            System.out.println(
+                    "Invalid option. Please select a valid option."
+            );
+        }
     }
 
-    private static List<Ingredient> getUserSelection(
-            List<Ingredient> availableIngredients) {
+    private static void selectOptionalIngredient(
+            HamburgerBuilder builder,
+            IngredientType type,
+            String title) {
 
-        List<Ingredient> selectedIngredients = new ArrayList<>();
+        List<Ingredient> options =
+                IngredientCatalog.getIngredientsByType(type);
+
+        System.out.println("\n" + title);
+        System.out.println("---------------------------------------");
+
+        for (int i = 0; i < options.size(); i++) {
+
+            Ingredient ingredient = options.get(i);
+
+            System.out.println(
+                    (i + 1) + ". " +
+                    ingredient.getDescription()
+            );
+        }
+
+        System.out.println("0. Skip");
 
         while (true) {
 
-            System.out.print("\nSelect an ingredient (0 to finish): ");
+            System.out.print("\nSelect an option: ");
 
             int option = scanner.nextInt();
 
             if (option == 0) {
+
+                System.out.println("Skipped.");
+
                 break;
             }
 
-            if (option < 1 || option > availableIngredients.size()) {
-                System.out.println("Invalid option. Please try again.");
-                continue;
+            if (option >= 1 && option <= options.size()) {
+
+                Ingredient selectedIngredient =
+                        options.get(option - 1);
+
+                builder.addIngredient(selectedIngredient);
+
+                System.out.println(
+                        "Added: " +
+                        selectedIngredient.getDescription()
+                );
+
+                break;
             }
 
-            Ingredient selectedIngredient =
-                    availableIngredients.get(option - 1);
+            System.out.println(
+                    "Invalid option. Please select a valid option."
+            );
+        }
+    }
 
-            selectedIngredients.add(selectedIngredient);
+    private static void selectMultipleIngredients(
+            HamburgerBuilder builder,
+            IngredientType type,
+            String title) {
+
+        List<Ingredient> options =
+                IngredientCatalog.getIngredientsByType(type);
+
+        System.out.println("\n" + title);
+        System.out.println("---------------------------------------");
+
+        for (int i = 0; i < options.size(); i++) {
+
+            Ingredient ingredient = options.get(i);
 
             System.out.println(
-                    "Added: " + selectedIngredient.getDescription()
+                    (i + 1) + ". " +
+                    ingredient.getDescription()
             );
         }
 
-        return selectedIngredients;
+        System.out.println("0. Finish selection");
+
+        while (true) {
+
+            System.out.print("\nSelect an option: ");
+
+            int option = scanner.nextInt();
+
+            if (option == 0) {
+
+                break;
+            }
+
+            if (option >= 1 && option <= options.size()) {
+
+                Ingredient selectedIngredient =
+                        options.get(option - 1);
+
+                builder.addIngredient(selectedIngredient);
+
+                System.out.println(
+                        "Added: " +
+                        selectedIngredient.getDescription()
+                );
+
+                continue;
+            }
+
+            System.out.println(
+                    "Invalid option. Please select a valid option."
+            );
+        }
     }
 
     private static void displayHamburger(Hamburger hamburger) {

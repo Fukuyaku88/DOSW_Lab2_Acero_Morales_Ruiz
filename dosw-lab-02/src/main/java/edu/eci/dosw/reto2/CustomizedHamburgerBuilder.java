@@ -8,7 +8,7 @@ public class CustomizedHamburgerBuilder implements HamburgerBuilder {
     private final List<Ingredient> ingredients;
 
     public CustomizedHamburgerBuilder() {
-        this.ingredients = new ArrayList<>();
+        ingredients = new ArrayList<>();
     }
 
     @Override
