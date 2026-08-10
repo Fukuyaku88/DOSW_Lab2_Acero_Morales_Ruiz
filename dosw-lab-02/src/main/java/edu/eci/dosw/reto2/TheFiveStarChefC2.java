@@ -7,6 +7,7 @@ public class TheFiveStarChefC2 {
 
     private static final Scanner scanner = new Scanner(System.in);
 
+
     public static void main(String[] args) {
         run();
     }
