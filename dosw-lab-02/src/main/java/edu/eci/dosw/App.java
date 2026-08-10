@@ -3,6 +3,7 @@ package edu.eci.dosw;
 import edu.eci.dosw.reto1.DonPepesStoreC1;
 import edu.eci.dosw.reto2.TheFiveStarChefC2;
 import edu.eci.dosw.reto3.TheKingdomOfVehiclesC3;
+import edu.eci.dosw.reto4.TheCurrencyExchangeScamC4;
 import edu.eci.dosw.reto5.CustomizedCoffeC5;
 import edu.eci.dosw.reto6.TalkToTechnicalSupportC6;
 import edu.eci.dosw.reto7.TheMagicRemoteControlC7;
@@ -22,7 +23,7 @@ public class App {
         System.out.println("\nChallenge 3: The Kingdom of Vehicles\n");
         TheKingdomOfVehiclesC3.run();
         System.out.println("\nChallenge 4: The Currency Exchange Scam\n");
-        TheMagicRemoteControlC7.run();
+        TheCurrencyExchangeScamC4.run();
         System.out.println("\nChallenge 5: Customized Coffee\n");
         CustomizedCoffeC5.run();
         System.out.println("\nChallenge 6: Talk to Technical Support\n");
