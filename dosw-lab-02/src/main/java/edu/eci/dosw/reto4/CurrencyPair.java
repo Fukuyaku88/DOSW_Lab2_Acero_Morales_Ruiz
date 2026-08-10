@@ -29,7 +29,7 @@ public final class CurrencyPair {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CurrencyPair)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         CurrencyPair that = (CurrencyPair) o;
         return from == that.from && to == that.to;
     }
@@ -38,6 +38,7 @@ public final class CurrencyPair {
     public int hashCode() {
         return Objects.hash(from, to);
     }
+
 
     @Override
     public String toString() {
