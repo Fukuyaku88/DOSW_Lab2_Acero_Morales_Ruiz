@@ -4,9 +4,20 @@
 #Output files (intelliJ)
 .idea/
 out/
-target/
 *.iml
 
 # System files
 .DS_Store
 Thumbs.db
+
+# Maven build directory
+target/
+*.jar
+*.war
+*.ear
+
+# Eclipse project files
+.classpath
+.project
+.settings/
+.factorypath
