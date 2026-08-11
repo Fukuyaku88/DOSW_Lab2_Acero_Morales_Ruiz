@@ -13,6 +13,7 @@ public class TheMagicRemoteControlC7 {
         Light light1 = new Light("L1");
         // Users
         User mom = new User("0001", "mom");
+
         User dad = new User("0002", "dad");
         User son = new User("0003", "son");
         // New remote Control
