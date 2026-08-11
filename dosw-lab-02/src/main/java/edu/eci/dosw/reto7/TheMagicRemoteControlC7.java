@@ -1,7 +1,5 @@
 package edu.eci.dosw.reto7;
 
-import java.awt.*;
-
 public class TheMagicRemoteControlC7 {
 
     public static void run(){
